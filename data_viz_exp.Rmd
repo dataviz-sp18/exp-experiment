@@ -225,9 +225,9 @@ ggboxplot(gender_time,
 ### degree
 ```{r}
 #run value selection == 2
-d1_time <- tidy(degree1)
+d1_time <- tidy(degree1) %>% filter(value == 2)
 #run value selection == 3
-d2_time <- tidy(degree2)
+d2_time <- tidy(degree2) %>% filter(value == 3)
 ```
 
 ```{r}
