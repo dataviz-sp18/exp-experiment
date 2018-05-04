@@ -17,8 +17,6 @@ library(rgdal)
 library(rgeos)
 library(maptools)
 library(ggthemes)
-library(car)
-library(tidyverse)
 library(car) 
 library(ggpubr)
 ```
@@ -63,7 +61,7 @@ tidy <- function(x) {
     names(new)[c(3)] = c("time")
     
     #uncomment or change this if selecting correct answers
-    #new <- new %>% filter(value == 2)
+    new <- new %>% filter(value == 5)
     
     return(new)
 }
@@ -73,6 +71,7 @@ tidy <- function(x) {
 
 ```{r}
 #tidy gender data
+#run value selection == 2
 gender1_time <- tidy(gender1)
 gender2_time <- tidy(gender2)
 gender_time <- rbind(gender1_time, gender2_time)
@@ -126,11 +125,13 @@ ggboxplot(gender_time %>%
 ### politics
 ```{r}
 #tidy politics data
+#run value selection == 2
 p1_time <- tidy(politics1)
 p2_time <- tidy(politics2)
 politics_time <- rbind(p1_time, p2_time)
 
 ```
+
 
 ```{r}
 #anova
@@ -153,6 +154,7 @@ table_politics
 chisq.test(table_politics)
 ```
 
+
 ```{r study 2 graphic}
 #Visualize: Specify the comparisons you want
 my_comparisons <- list( c("con", "n"), 
@@ -173,12 +175,22 @@ ggboxplot(politics_time %>%
   stat_compare_means(comparisons = my_comparisons, 
                      label.y = c(5.5, 6.5, 7.5))+
   stat_compare_means(label.y = 8.5)
+
 ```
+
 
 ### emotion
 ```{r}
-e1_time <- tidy(emotion1) %>% filter(value==3)
-e2_time <- tidy(emotion2) %>% filter(value==5)
+#run value selection == 3
+e1_time <- tidy(emotion1)
+```
+
+```{r}
+#run value selection == 5
+e2_time <- tidy(emotion2)
+```
+
+```{r}
 emotion_time <- rbind(e1_time, e2_time)
 
 #anova
