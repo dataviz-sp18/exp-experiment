@@ -38,8 +38,6 @@ gender2 <- all2 %>% select(1:9)
 politics2 <- all2 %>% select(10:18)
 degree2 <- all2 %>% select(19:27)
 emotion2 <- all2 %>% select(28:36)
-
-
 ```
 
 ```{r}
@@ -88,13 +86,12 @@ fit_gender
 ```
 
 
-```{r}
+```{r Study 1 Chi-Square}
 #chisq
 #rerun function without value selection
 g1 <- tidy(gender1)
 g2 <- tidy(gender2)
 gender_new <- rbind(g1, g2)
-
 
 table_gender = xtabs(~ condition + value, data = gender_new)
 table_gender
@@ -109,7 +106,8 @@ my_comparisons <- list( c("con", "n"),
                         c("incon", "n"), 
                         c("con", "incon"))
 
-ggboxplot(gender_time, 
+ggboxplot(gender_time %>% 
+            filter(value == 2), 
           x = "condition", 
           y = "time",
           color = "condition", 
@@ -134,7 +132,6 @@ politics_time <- rbind(p1_time, p2_time)
 
 ```
 
-
 ```{r}
 #anova
 politics_aov = lm(time ~ condition, data = politics_time)
@@ -154,26 +151,40 @@ table_politics = xtabs(~ condition + value, data = politics_new)
 table_politics
 
 chisq.test(table_politics)
-
 ```
 
+```{r study 2 graphic}
+#Visualize: Specify the comparisons you want
+my_comparisons <- list( c("con", "n"), 
+                        c("incon", "n"), 
+                        c("con", "incon"))
+
+ggboxplot(politics_time %>%
+            filter(value == 2), 
+          x = "condition", 
+          y = "time",
+          color = "condition", 
+          palette = "jco",
+          add = "jitter")+ 
+  theme(legend.position="none")+
+  ylab("time (sec)")+
+  scale_x_discrete(breaks=c("con","incon","n"),
+        labels=c("Congruent","Incongruent","Control"))+
+  stat_compare_means(comparisons = my_comparisons, 
+                     label.y = c(5.5, 6.5, 7.5))+
+  stat_compare_means(label.y = 8.5)
+```
 
 ### emotion
 ```{r}
-e1_time <- tidy(emotion1)
-```
-
-```{r}
-e2_time <- tidy(emotion2)
-```
-
-```{r}
+e1_time <- tidy(emotion1) %>% filter(value==3)
+e2_time <- tidy(emotion2) %>% filter(value==5)
 emotion_time <- rbind(e1_time, e2_time)
+
 #anova
 emotion_aov = lm(time ~ condition, data = emotion_time)
 fit_emotion = Anova(emotion_aov, type = 3)
 fit_emotion
-
 ```
 
 ```{r}
@@ -190,13 +201,31 @@ chisq.test(table_emotion)
 
 ```
 
+```{r study 3 graphic}
+# Visualize: Specify the comparisons you want
+my_comparisons <- list( c("con", "n"), 
+                        c("incon", "n"), 
+                        c("con", "incon"))
+
+ggboxplot(gender_time, 
+          x = "condition", 
+          y = "time",
+          color = "condition", 
+          palette = "jco",
+          add = "jitter")+ 
+  theme(legend.position="none")+
+  ylab("time (sec)")+
+  scale_x_discrete(breaks=c("con","incon","n"),
+        labels=c("Congruent","Incongruent","Control"))+
+  stat_compare_means(comparisons = my_comparisons, 
+                     label.y = c(5.5, 6.5, 7.5))+
+  stat_compare_means(label.y = 8.5)
+```
+
 ### degree
 ```{r}
 #run value selection == 2
 d1_time <- tidy(degree1)
-```
-
-```{r}
 #run value selection == 3
 d2_time <- tidy(degree2)
 ```
@@ -210,7 +239,6 @@ fit_degree
 
 ```
 
-
 ```{r}
 #chisq test
 #rerun function without value selection
@@ -222,6 +250,25 @@ table_degree = xtabs(~ condition + value, data = degree_new)
 table_degree
 
 chisq.test(table_degree)
-
 ```
 
+```{r}
+# Visualize: Specify the comparisons you want
+my_comparisons <- list( c("con", "n"), 
+                        c("incon", "n"), 
+                        c("con", "incon"))
+
+ggboxplot(degree_time, 
+          x = "condition", 
+          y = "time",
+          color = "condition", 
+          palette = "jco",
+          add = "jitter")+ 
+  theme(legend.position="none")+
+  ylab("time (sec)")+
+  scale_x_discrete(breaks=c("con","incon","n"),
+        labels=c("Congruent","Incongruent","Control"))+
+  stat_compare_means(comparisons = my_comparisons, 
+                     label.y = c(5.5, 6.5, 7.5))+
+  stat_compare_means(label.y = 8.5)
+```
