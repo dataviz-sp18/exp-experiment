@@ -1,0 +1,63 @@
+---
+title: "data viz exp_hw2"
+author: "Shao_Lyu"
+date: "May 4, 2018"
+output: github_document
+---
+
+```{r}
+#get data
+all <- read.csv("data viz results_rearranged.csv")
+
+gender <- all %>% select(1:9)
+politics <- all %>% select(10:18)
+degree <- all %>% select(19:27)
+emotion <- all %>% select(28:36)
+
+```
+
+```{r}
+#tidy gender data
+set1 <- gender %>% 
+  select(2,5,8) %>%
+  gather("condition", "value")
+
+set2 <- gender %>% 
+  select(3,6,9) %>%
+  gather("condition", "time")
+
+gender_new <- cbind(set1, set2[,2])
+
+#exclude na values
+gender_new <- gender_new %>%
+ filter(!is.na(value))
+
+gender_new$condition <- as.factor(gender_new$condition)
+
+gender_time <- gender_new %>% 
+  filter(value == 2)
+
+names(gender_time)[c(3)] = c("time")
+
+#stat test
+library(car) #for anova
+gender_aov = lm(time ~ condition, data = gender_time)
+fit_gender = Anova(gender_aov, type = 3)
+fit_gender
+
+#chisq
+table_gender = xtabs(~ condition + value, data = gender_new)
+table_gender
+
+chisq.test(table_gender)
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
