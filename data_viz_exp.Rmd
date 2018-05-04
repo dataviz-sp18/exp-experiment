@@ -5,47 +5,86 @@ date: "May 4, 2018"
 output: github_document
 ---
 
+
+```{r}
+library(tidyverse)
+library(car) #for anova test
+```
+
 ```{r}
 #get data
-all <- read.csv("data viz results_rearranged.csv")
 
-gender <- all %>% select(1:9)
-politics <- all %>% select(10:18)
-degree <- all %>% select(19:27)
-emotion <- all %>% select(28:36)
+all1 <- read.csv("data viz results_rearranged_q1.csv")
+all2 <- read.csv("data viz results_rearranged_q2.csv")
+
+gender1 <- all1 %>% select(1:9)
+politics1 <- all1 %>% select(10:18)
+degree1 <- all1 %>% select(19:27)
+emotion1 <- all1 %>% select(28:36)
+
+gender2 <- all2 %>% select(1:9)
+politics2 <- all2 %>% select(10:18)
+degree2 <- all2 %>% select(19:27)
+emotion2 <- all2 %>% select(28:36)
+
 
 ```
 
 ```{r}
+#reusable tidy data function
+tidy <- function(x) {
+    #rename levels
+    names(x)[c(2,5,8)] = c("con", "incon", "n")
+    
+    set1 <- x %>% 
+      select(2,5,8) %>%
+      gather("condition", "value")
+    
+    set2 <- x %>% 
+      select(3,6,9) %>%
+      gather("condition", "value")
+    
+    new <- cbind(set1, set2[,2])
+    
+    #exclude na values
+    new <- new %>% filter(!is.na(value))
+    
+    new$condition <- as.factor(new$condition)
+    names(new)[c(3)] = c("time")
+    
+    #uncomment or change this if selecting correct answers
+    #new <- new %>% filter(value == 2)
+    
+    return(new)
+}
+
+```
+
+
+```{r}
 #tidy gender data
-set1 <- gender %>% 
-  select(2,5,8) %>%
-  gather("condition", "value")
+gender1_time <- tidy(gender1)
+gender2_time <- tidy(gender2)
+gender_time <- rbind(gender1_time, gender2_time)
+```
 
-set2 <- gender %>% 
-  select(3,6,9) %>%
-  gather("condition", "time")
 
-gender_new <- cbind(set1, set2[,2])
-
-#exclude na values
-gender_new <- gender_new %>%
- filter(!is.na(value))
-
-gender_new$condition <- as.factor(gender_new$condition)
-
-gender_time <- gender_new %>% 
-  filter(value == 2)
-
-names(gender_time)[c(3)] = c("time")
-
-#stat test
-library(car) #for anova
+```{r}
+#anova
 gender_aov = lm(time ~ condition, data = gender_time)
 fit_gender = Anova(gender_aov, type = 3)
 fit_gender
+```
 
+
+```{r}
 #chisq
+#rerun function without value selection
+g1 <- tidy(gender1)
+g2 <- tidy(gender2)
+gender_new <- rbind(g1, g2)
+
+
 table_gender = xtabs(~ condition + value, data = gender_new)
 table_gender
 
@@ -53,11 +92,104 @@ chisq.test(table_gender)
 
 ```
 
+
+### politics
 ```{r}
+#tidy politics data
+p1_time <- tidy(politics1)
+p2_time <- tidy(politics2)
+politics_time <- rbind(p1_time, p2_time)
+
+```
+
+
+```{r}
+#anova
+politics_aov = lm(time ~ condition, data = politics_time)
+fit_politics = Anova(politics_aov, type = 3)
+fit_politics
+```
+
+```{r}
+#chisq
+#rerun function without value selection
+p1 <- tidy(politics1)
+p2 <- tidy(politics2)
+politics_new <- rbind(p1, p2)
+
+
+table_politics = xtabs(~ condition + value, data = politics_new)
+table_politics
+
+chisq.test(table_politics)
+
+```
+
+
+### emotion
+```{r}
+e1_time <- tidy(emotion1)
+```
+
+```{r}
+e2_time <- tidy(emotion2)
+```
+
+```{r}
+emotion_time <- rbind(e1_time, e2_time)
+#anova
+emotion_aov = lm(time ~ condition, data = emotion_time)
+fit_emotion = Anova(emotion_aov, type = 3)
+fit_emotion
 
 ```
 
 ```{r}
+#chisq test
+#rerun function without value selection
+e1 <- tidy(emotion1)
+e2 <- tidy(emotion2)
+emotion_new <- rbind(e1, e2)
+
+table_emotion = xtabs(~ condition + value, data = emotion_new)
+table_emotion
+
+chisq.test(table_emotion)
+
+```
+
+### degree
+```{r}
+#run value selection == 2
+d1_time <- tidy(degree1)
+```
+
+```{r}
+#run value selection == 3
+d2_time <- tidy(degree2)
+```
+
+```{r}
+degree_time <- rbind(d1_time, d2_time)
+#anova
+degree_aov = lm(time ~ condition, data = degree_time)
+fit_degree = Anova(degree_aov, type = 3)
+fit_degree
+
+```
+
+
+```{r}
+#chisq test
+#rerun function without value selection
+d1 <- tidy(degree1)
+d2 <- tidy(degree2)
+degree_new <- rbind(d1, d2)
+
+table_degree = xtabs(~ condition + value, data = degree_new)
+table_degree
+
+chisq.test(table_degree)
 
 ```
 
