@@ -5,7 +5,6 @@ date: "May 4, 2018"
 output: github_document
 ---
 
-<<<<<<< HEAD
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
@@ -19,12 +18,9 @@ library(rgeos)
 library(maptools)
 library(ggthemes)
 library(car)
-=======
-
-```{r}
 library(tidyverse)
-library(car) #for anova test
->>>>>>> 442edb1f6da74dedbe646371955c20caaa9e7893
+library(car) 
+library(ggpubr)
 ```
 
 ```{r}
@@ -85,12 +81,7 @@ gender_time <- rbind(gender1_time, gender2_time)
 ```
 
 
-<<<<<<< HEAD
-#stat test
-=======
 ```{r}
-#anova
->>>>>>> 442edb1f6da74dedbe646371955c20caaa9e7893
 gender_aov = lm(time ~ condition, data = gender_time)
 fit_gender = Anova(gender_aov, type = 3)
 fit_gender
@@ -110,6 +101,27 @@ table_gender
 
 chisq.test(table_gender)
 
+```
+
+```{r Study 1 graphic}
+# Visualize: Specify the comparisons you want
+my_comparisons <- list( c("con", "n"), 
+                        c("incon", "n"), 
+                        c("con", "incon"))
+
+ggboxplot(gender_time, 
+          x = "condition", 
+          y = "time",
+          color = "condition", 
+          palette = "jco",
+          add = "jitter")+ 
+  theme(legend.position="none")+
+  ylab("time (sec)")+
+  scale_x_discrete(breaks=c("con","incon","n"),
+        labels=c("Congruent","Incongruent","Control"))+
+  stat_compare_means(comparisons = my_comparisons, 
+                     label.y = c(5.5, 6.5, 7.5))+
+  stat_compare_means(label.y = 8.5)
 ```
 
 
