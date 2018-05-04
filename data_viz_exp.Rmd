@@ -1,9 +1,24 @@
 ---
 title: "data viz exp_hw2"
-author: "Shao_Lyu"
+author: "Muxuan Lyu & Shuai Shao"
 date: "May 4, 2018"
 output: github_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+# Load packages
+library(tidyverse)
+library(ggplot2)
+library(rvest)
+library(dplyr)
+library(rgdal)
+library(rgeos)
+library(maptools)
+library(ggthemes)
+library(car)
+```
 
 ```{r}
 #get data
@@ -40,7 +55,6 @@ gender_time <- gender_new %>%
 names(gender_time)[c(3)] = c("time")
 
 #stat test
-library(car) #for anova
 gender_aov = lm(time ~ condition, data = gender_time)
 fit_gender = Anova(gender_aov, type = 3)
 fit_gender
