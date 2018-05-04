@@ -53,7 +53,7 @@ tidy <- function(x) {
     names(new)[c(3)] = c("time")
     
     #uncomment or change this if selecting correct answers
-    #new <- new %>% filter(value == 2)
+    #new <- new %>% filter(value == 3)
     
     return(new)
 }
@@ -63,6 +63,7 @@ tidy <- function(x) {
 
 ```{r}
 #tidy gender data
+#run value selection == 2
 gender1_time <- tidy(gender1)
 gender2_time <- tidy(gender2)
 gender_time <- rbind(gender1_time, gender2_time)
@@ -96,6 +97,7 @@ chisq.test(table_gender)
 ### politics
 ```{r}
 #tidy politics data
+#run value selection == 2
 p1_time <- tidy(politics1)
 p2_time <- tidy(politics2)
 politics_time <- rbind(p1_time, p2_time)
@@ -128,10 +130,12 @@ chisq.test(table_politics)
 
 ### emotion
 ```{r}
+#run value selection == 3
 e1_time <- tidy(emotion1)
 ```
 
 ```{r}
+#run value selection == 5
 e2_time <- tidy(emotion2)
 ```
 
