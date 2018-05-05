@@ -25,9 +25,9 @@ library(knitr)
 
 #Introduction
 
-Vision is the most important sense for human beings. Above **70%** of environmental information are accepted by our eyes (Dale Purves, 2008). Data visualization is a complicated process that involves multiple elements, among which the color plays an important role. Color conveys a lot of meaningful information unconsciously. Our brains are always trying to establish the relationship between the color and specific meaning. According to [Lin et al. (2013)]( http://eds.b.ebscohost.com.proxy.uchicago.edu/eds/pdfviewer/pdfviewer?vid=2&sid=6f030dac-b3d6-4b66-b6a2-2aba19836a59%40sessionmgr101), the “associations of colors and meanings” may be grounded in the physical appearance of objects, common metaphors, or other linguistic or cultural conventions. For instance, when visualizing the world map, we always use blue to represent oceans and use green to represent lands. Since it is obvious that human beings have the color bias that relates specific colors and specific meanings, computer programmer set a series of "default value" for data visualization. 
+Vision is the most important sense for human beings. Above **70%** of environmental information are accepted by our eyes [(Purves, 2011)](https://www.hse.ru/data/2011/06/22/1215686482/Neuroscience.pdf). Data visualization is a complicated process that involves multiple elements, among which the color plays an important role. Color conveys a lot of meaningful information unconsciously. Our brains are always trying to establish the relationship between the color and specific meaning. According to [Lin et al. (2013)]( http://eds.b.ebscohost.com.proxy.uchicago.edu/eds/pdfviewer/pdfviewer?vid=2&sid=6f030dac-b3d6-4b66-b6a2-2aba19836a59%40sessionmgr101), the “associations of colors and meanings” may be grounded in the physical appearance of objects, common metaphors, or other linguistic or cultural conventions. For instance, when visualizing the world map, we always use blue to represent oceans and use green to represent lands. Since it is obvious that human beings have the color bias that relates specific colors and specific meanings, computer programmer set a series of "default value" for data visualization. 
 
-In this project, we plan to conduct an in-depth study to understand whether the color bias exists and how it affects our graphic perception. We will test four specific aspect that prevails in our daily life, the gender-color bias, the emotion-color bias, the political color bias, and the gradient bias. This study will deepen our understanding of color selection, perception, and interpretation in data visualization. 
+In this project, we plan to conduct an in-depth study to understand whether the color bias exists and how it affects our graphic perception. We will test four specific aspects that prevail in our daily life, the gender-color bias, the emotion-color bias, the political color bias, and the gradient bias. This study will deepen our understanding of color selection, perception, and interpretation in data visualization. 
 
 #Method
 
@@ -122,7 +122,7 @@ fit_gender
 ```
 
 
-```{r Study 1 Chi-Square}
+```{r Study 1 Chi-Square, include=FALSE}
 #chisq
 #rerun function without value selection
 g1 <- tidy(gender1)
@@ -161,7 +161,7 @@ ggboxplot(gender_time,
   stat_compare_means(label.y = 8.5)
 ```
 
-The result in Study 1 indicate that both the accuracy (X-Squared=0.70, df=2, p-value=0.71) and the reaction time (F=0.31, df=2, p-value=0.90) do not differ across three conditions. We also prove that responses are significantly different from the random guessing. Therefore, we fail to detect the gender-color bias in the current study. 
+Results in Study 1 indicate that both the accuracy (X-Squared=0.70, df=2, p-value=0.71) and the reaction time (F=0.31, df=2, p-value=0.90) do not differ across three conditions. We also prove that responses are significantly different from the random guessing. Therefore, we fail to detect the gender-color bias in the current study. 
 
 ### politics
 ```{r study 2 dataset}
@@ -171,14 +171,14 @@ p2_time <- tidy(politics2) %>% filter(value ==2)
 politics_time <- rbind(p1_time, p2_time)
 ```
 
-```{r study 2 ANOVA}
+```{r study 2 ANOVA, include=FALSE}
 #anova
 politics_aov = lm(time ~ condition, data = politics_time)
 fit_politics = Anova(politics_aov, type = 3)
 fit_politics
 ```
 
-```{r study 2 Chi-Square}
+```{r study 2 Chi-Square, include=FALSE}
 #chisq
 #rerun function without value selection
 p1 <- tidy(politics1)
@@ -222,14 +222,14 @@ ggboxplot(politics_time,
 Result in Study 2 indicate that both the accuracy (X-Squared=0.16, df=2, p-value=0.92) and the reaction time (F=0.27, df=2, p-value=0.76) do not differ across three conditions. We also prove that responses are significantly different from the random guessing. Therefore, we fail to detect the gender-color bias in the current study. 
 
 ### emotion
-```{r}
+```{r study 3 tidy data}
 #run value selection == 3
 e1_time <- tidy(emotion1) %>% filter(value == 3)
 #run value selection == 5
 e2_time <- tidy(emotion2) %>% filter(value == 5)
 ```
 
-```{r}
+```{r study 3, include=FALSE}
 emotion_time <- rbind(e1_time, e2_time)
 
 #anova
@@ -238,7 +238,7 @@ fit_emotion = Anova(emotion_aov, type = 3)
 fit_emotion
 ```
 
-```{r study 3 Chi-Square}
+```{r study 3 Chi-Square, include=FALSE}
 #chisq test
 #rerun function without value selection
 e1 <- tidy(emotion1)
@@ -289,14 +289,14 @@ ggboxplot(gender_time,
 As the choices in study 3 are not binary and the correct answers to question 1 & 2 are different, we do the chi-square test separately. However, the chi-square test indicates that the difference in question 1 is significant (X-Squared=35.02, df=10, p-value<0.001), while the difference in question 2 is not significant (X-Squared=7.46, df=10, p-value=0.68). We also prove that responses are significantly different from the random guessing. One-way ANOVA reveals no difference in reaction time of accurate responses across three conditions (F=0.10, df=2, p-value=0.91).
 
 ### degree
-```{r}
+```{r study 4 tidy data}
 #run value selection == 2
 d1_time <- tidy(degree1) %>% filter(value == 2)
 #run value selection == 3
 d2_time <- tidy(degree2) %>% filter(value == 3)
 ```
 
-```{r}
+```{r study 4 ANOVA, include=FALSE}
 degree_time <- rbind(d1_time, d2_time)
 #anova
 degree_aov = lm(time ~ condition, data = degree_time)
@@ -304,7 +304,7 @@ fit_degree = Anova(degree_aov, type = 3)
 fit_degree
 ```
 
-```{r}
+```{r study 4 Chi-Square, include=FALSE}
 #chisq test
 #rerun function without value selection
 d1 <- tidy(degree1)
@@ -326,7 +326,7 @@ p = rep(1/3, 3)
 chisq.test(table_d2p,p=p)
 ```
 
-```{r}
+```{r study 4 graphic}
 # Visualize: Specify the comparisons you want
 my_comparisons <- list( c("con", "n"), 
                         c("incon", "n"), 
@@ -348,3 +348,7 @@ ggboxplot(degree_time,
 ```
 
 As the choices in study 4 are not binary and the correct answers to question 1 & 2 are different, we do the chi-square tests separately. However, the chi-square test indicates that the difference in question 1 is not significant (X-Squared=3.85, df=4, p-value=0.43), while the difference in question 2 is significant (X-Squared=14.75, df=4, p-value=0.05). One-way ANOVA reveals no difference in reaction time of accurate responses across three conditions (F=2.03, df=2, p-value=0.14). However, the goodness of fit test proves that responses are significantly different from the random guessing in question 1 but not in study 2.
+
+#Cooperation
+
+This project is accomplished by Muxuan Lyu and Shuai Shao collectively. Muxuan Lyu is responsible for **Study 1 (gender bias)** and **Study 2 (emotion bias)**. Shuai Shao is responsible for **Study 3 (political bias)** and **Study 4 (gradient bias)**. Both authors contribute to collecting data, analyzing data, and writing the report.
