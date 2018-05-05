@@ -8,7 +8,7 @@ Introduction
 
 Vision is the most important sense for human beings. Above **70%** of environmental information are accepted by our eyes [(Purves, 2011)](https://www.hse.ru/data/2011/06/22/1215686482/Neuroscience.pdf). Data visualization is a complicated process that involves multiple elements, among which the color plays an important role. Color conveys a lot of meaningful information unconsciously. Our brains are always trying to establish the relationship between the color and specific meaning. According to [Lin et al. (2013)](http://eds.b.ebscohost.com.proxy.uchicago.edu/eds/pdfviewer/pdfviewer?vid=2&sid=6f030dac-b3d6-4b66-b6a2-2aba19836a59%40sessionmgr101), the “associations of colors and meanings” may be grounded in the physical appearance of objects, common metaphors, or other linguistic or cultural conventions. For instance, when visualizing the world map, we always use blue to represent oceans and use green to represent lands. Since it is obvious that human beings have the color bias that relates specific colors and specific meanings, computer programmer set a series of "default value" for data visualization.
 
-In this project, we plan to conduct an in-depth study to understand whether the color bias exists and how it affects our graphic perception. We will test four specific aspect that prevails in our daily life, the gender-color bias, the emotion-color bias, the political color bias, and the gradient bias. This study will deepen our understanding of color selection, perception, and interpretation in data visualization.
+In this project, we plan to conduct an in-depth study to understand whether the color bias exists and how it affects our graphic perception. We will test four specific aspects that prevail in our daily life, the gender-color bias, the emotion-color bias, the political color bias, and the gradient bias. This study will deepen our understanding of color selection, perception, and interpretation in data visualization.
 
 Method
 ======
@@ -54,6 +54,8 @@ In each study, first, we conduct a Chi-Square test to explore whether the accura
 Results
 =======
 
+### gender
+
 ![](data_viz_exp_files/figure-markdown_github-ascii_identifiers/Study%201%20graphic-1.png)
 
 Results in Study 1 indicate that both the accuracy (X-Squared=0.70, df=2, p-value=0.71) and the reaction time (F=0.31, df=2, p-value=0.90) do not differ across three conditions. We also prove that responses are significantly different from the random guessing. Therefore, we fail to detect the gender-color bias in the current study.
@@ -62,7 +64,7 @@ Results in Study 1 indicate that both the accuracy (X-Squared=0.70, df=2, p-valu
 
 ![](data_viz_exp_files/figure-markdown_github-ascii_identifiers/study%202%20graphic-1.png)
 
-Result in Study 2 indicate that both the accuracy (X-Squared=0.16, df=2, p-value=0.92) and the reaction time (F=0.27, df=2, p-value=0.76) do not differ across three conditions. We also prove that responses are significantly different from the random guessing. Therefore, we fail to detect the gender-color bias in the current study.
+Results in Study 2 indicate that both the accuracy (X-Squared=0.16, df=2, p-value=0.92) and the reaction time (F=0.27, df=2, p-value=0.76) do not differ across three conditions. We also prove that responses are significantly different from the random guessing. Therefore, we fail to detect the gender-color bias in the current study.
 
 ### emotion
 
@@ -75,3 +77,19 @@ As the choices in study 3 are not binary and the correct answers to question 1 &
 ![](data_viz_exp_files/figure-markdown_github-ascii_identifiers/study%204%20graphic-1.png)
 
 As the choices in study 4 are not binary and the correct answers to question 1 & 2 are different, we do the chi-square tests separately. However, the chi-square test indicates that the difference in question 1 is not significant (X-Squared=3.85, df=4, p-value=0.43), while the difference in question 2 is significant (X-Squared=14.75, df=4, p-value=0.05). One-way ANOVA reveals no difference in reaction time of accurate responses across three conditions (F=2.03, df=2, p-value=0.14). However, the goodness of fit test proves that responses are significantly different from the random guessing in question 1 but not in study 2.
+
+Cooperation
+===========
+
+This project is accomplished by Muxuan Lyu and Shuai Shao collectively. Muxuan Lyu is responsible for **Study 1 (gender bias)** and **Study 2 (emotion bias)**. Shuai Shao is responsible for **Study 3 (political bias)** and **Study 4 (gradient bias)**. Both authors contribute to collecting data, analyzing data, and writing the report.
+
+Discussion
+==========
+
+Our study showed that people might show certain bias toward color, which could influence their perception of the graphs. However, our results differed from study to study. Both Study 1 (testing color bias for gender) and Study 2 (testing color bias for political parties) did not show any significance either for the accuracy of perception or reaction time for accurate responses. People’s choices for both studies were not due to chances. The results not necessarily suggested that people did not have any color bias for gender or political parties. The reason for non-significant results might be explained by the design of the study. There were only two categories to differentiate, people’s wrong perception might be easily overridden by the information enclosed in the legend of the graph, and thus were less prone to make mistakes. Besides, people’s first perception of the graph might be subconscious and therefore difficult to detect using the format of a questionnaire.
+
+We demonstrated in the study of color bias for emotions that people showed differences in accuracy in one of our questions. Participants’ choices for both questions were significantly different from chances. Compared to Study 1 and 2, we had bars in six different colors with six emotions. Participants needed to process more information in order to make the correct choice within the time limit. This increase in the cognitive load might be one of the reasons that caused lower accuracy in both incongruent and control condition of question 1. However, the differences between two questions were hard to explain because the data used to generate the graphs were from simulations and we did not expect any differences between the two questions. One reason that might influence participants’ choice could be that it was conceptually hard to process the information that a person’s day was mainly dominated by fear and angry (shown in question 1) compared to sadness and fear (shown in question 2). Therefore, question 1, where the control and incongruent condition both had a greater false rate than congruent condition, showed less consistency in accuracy compared to question 2 across conditions. The reaction time again did not show any significance between conditions, which might also be due to the design of our study was not be able to detect this subtle difference in decision making.
+
+In the study of color bias for gradient, we did not show that people differed in either accuracy or reaction time in the three conditions. Although the accuracy of question 2 was significantly different for three conditions, people’s choices failed to show differences from chances. However, it was interesting that question 2 was the only one that showed choices were probably due to chances, which implied that the question was hard to pin down a right answer within the time limit. Therefore, we suspected that non-regular shape might be hard for people to process in addition to color information.
+
+In conclusion, the perceptions of color were more prone to bias when people were cognitively loaded. In other words, when there was a lot of information to digest, people tended to use their bias for quicker processing. However, our studies should be refined for future research in order to have a more precise conclusion of the perception bias towards color and how and when that bias affect our decision making.
